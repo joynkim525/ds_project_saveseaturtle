@@ -1,0 +1,392 @@
+---
+title : plastics vs delivery
+output:
+  html_document: 
+    toc: yes
+    toc_float: true
+    highlight: tango
+    code_folding: show
+    number_section: true
+    self_contained: true
+
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+```
+
+
+```{r}
+deli1701 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_01MONTH.csv')
+deli1702 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_02MONTH.csv')
+deli1703 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_03MONTH.csv')
+deli1704 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_04MONTH.csv')
+deli1705 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_05MONTH.csv')
+deli1706 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_06MONTH.csv')
+deli1707 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_07MONTH.csv')
+deli1708 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_08MONTH.csv')
+deli1709 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_09MONTH.csv')
+deli1710 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_10MONTH.csv')
+deli1711 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_11MONTH.csv')
+deli1712 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/17/CALL_NDELIVERY_12MONTH.csv')
+
+```
+
+
+```{r}
+sum(is.na(deli1701))
+sum(is.na(deli1702))
+```
+
+```{r}
+colnames(deli1701)
+colnames(deli1712)
+```
+
+```{r}
+head(deli1712)
+```
+
+
+```{r}
+deli17_new <- bind_rows(deli1701, deli1702, deli1703, deli1704, deli1705, deli1706, deli1707, deli1708, deli1709, deli1710, deli1711, deli1712) %>% 
+  group_by(시군구, 읍면동) %>%
+  summarise(total_used = sum(통화건수))
+
+head(deli17_new)
+
+```
+
+```{r}
+write.csv(deli17_new, file="C:/Users/thfgm/Desktop/deli17.csv")
+```
+
+
+```{r}
+deli17 <- deli17_new %>% 
+  summarise(total_used = sum(total_used)) 
+
+deli17 <- deli17 %>% 
+  summarise(total_used = sum(total_used))
+
+head(deli17)
+```
+
+
+```{r}
+deli1601 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_01MONTH.csv')
+deli1602 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_02MONTH.csv')
+deli1603 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_03MONTH.csv')
+deli1604 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_04MONTH.csv')
+deli1605 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_05MONTH.csv')
+deli1606 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_06MONTH.csv')
+deli1607 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_07MONTH.csv')
+deli1608 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_08MONTH.csv')
+deli1609 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_09MONTH.csv')
+deli1610 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_10MONTH.csv')
+deli1611 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_11MONTH.csv')
+deli1612 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/16/CALL_NDELIVERY_12MONTH.csv')
+```
+
+```{r}
+colnames(deli1606)
+```
+
+
+```{r}
+
+deli16 <- bind_rows(deli1601, deli1603, deli1604, deli1605, deli1606, deli1607, deli1608, deli1609, deli1610, deli1611, deli1612) %>% 
+  summarise(total_used = sum(통화건수))
+
+head(deli16)
+```
+
+```{r}
+colnames(deli1504)
+```
+
+
+```{r}
+
+deli1501 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_01MONTH.csv')
+deli1502 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_02MONTH.csv')
+deli1503 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_03MONTH.csv')
+deli1504 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_04MONTH.csv')
+deli1505 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_05MONTH.csv')
+deli1506 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_06MONTH.csv')
+deli1507 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_07MONTH.csv')
+deli1508 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_08MONTH.csv')
+deli1509 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_09MONTH.csv')
+deli1510 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_10MONTH.csv')
+deli1511 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_11MONTH.csv')
+deli1512 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/15/CALL_NDELIVERY_12MONTH.csv')
+```
+
+```{r}
+colnames(deli1512)
+```
+
+```{r}
+deli1501 <- deli1501 %>%
+  rename ("통화건수" = "통화량")
+colnames(deli1501)
+
+deli1502 <- deli1502 %>%
+  rename ("통화건수" = "통화량")
+colnames(deli1502)
+
+deli1503 <- deli1503 %>%
+  rename ("통화건수" = "통화량")
+colnames(deli1503)
+
+deli1504 <- deli1504 %>%
+  rename ("통화건수" = "통화량")
+colnames(deli1504)
+
+deli1505 <- deli1505 %>%
+  rename ("통화건수" = "통화량")
+colnames(deli1505)
+```
+
+
+```{r}
+deli15 <- bind_rows(deli1501, deli1502, deli1503, deli1504, deli1505, deli1506, deli1507, deli1508, deli1509, deli1510, deli1511, deli1512) %>% 
+  summarise(total_used = sum(통화건수))
+
+head(deli15)
+```
+
+
+```{r}
+deli1401 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_01MONTH.csv')
+deli1402 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_02MONTH.csv')
+deli1403 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_03MONTH.csv')
+deli1404 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_04MONTH.csv')
+deli1405 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_05MONTH.csv')
+deli1406 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_06MONTH.csv')
+deli1407 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_07MONTH.csv')
+deli1408 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_08MONTH.csv')
+deli1409 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_09MONTH.csv')
+deli1410 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_10MONTH.csv')
+deli1411 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_11MONTH.csv')
+deli1412 = read.csv('C:/Users/thfgm/Desktop/데사입/배달량/14/CALL_NDELIVERY_12MONTH.csv')
+```
+
+```{r}
+colnames(deli1411)
+```
+
+
+```{r}
+deli1409 <- deli1409 %>% 
+  rename('이용건수' = '통화건수')
+deli1410 <- deli1410 %>% 
+  rename('이용건수' = '통화건수')
+deli1411 <- deli1411 %>% 
+  rename('이용건수' = '통화건수')
+deli1412 <- deli1412 %>%
+  rename('이용건수' = '통화건수')
+```
+
+```{r}
+deli14 <- bind_rows(deli1401, deli1402, deli1403, deli1404, deli1405, deli1406, deli1407, deli1408, deli1409, deli1410, deli1411, deli1412) %>% 
+  summarise(total_used = sum(이용건수))
+
+head(deli14)
+```
+
+```{r}
+deli_amount = bind_rows(deli17, deli16, deli15, deli14)
+deli_amount['year'] = c(2017, 2016, 2015, 2014)
+ggplot(data = deli_amount, aes(x=year, y=total_used, group)) + geom_bar(stat = "identity", fill = "pink", width = 0.3) + geom_line(color = '#FF6666', size = 2)
+```
+
+```{r}
+trash03 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2003.csv')
+trash04 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2004.csv')
+trash05 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2005.csv')
+trash06 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2006.csv')
+trash07 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2007.csv')
+trash08 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2008.csv')
+trash09 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2009.csv')
+trash10 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2010.csv')
+trash11 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2011.csv')
+trash12 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2012.csv')
+trash13 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2013.csv')
+trash14 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2014.csv')
+trash15 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2015.csv')
+trash16 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2016.csv')
+trash17 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2017.csv')
+
+glimpse(trash17)
+glimpse(trash03)
+```
+
+```{r}
+plastic03 <- trash03 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic04 <- trash04 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic05 <- trash05 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic06 <- trash06 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic07 <- trash07 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic08 <- trash08 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic09 <- trash09 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic10 <- trash10 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic11 <- trash11 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic12 <- trash12 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic13 <- trash13 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic14 <- trash14 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic15 <- trash15 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic16 <- trash16 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+plastic17 <- trash17 %>% 
+  summarise(total_plastic = sum(총플라스틱배출량))
+```
+
+
+
+```{r}
+
+plastic <- bind_rows(plastic03, plastic04, plastic05, plastic06, plastic07, plastic08, plastic09, plastic10, plastic11, plastic12, plastic13, plastic14, plastic15, plastic16, plastic17)
+plastic['year'] = c(2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017)
+head(plastic)
+```
+
+```{r}
+ggplot(plastic, aes(x=year, y=total_plastic)) + geom_bar(stat = "identity", fill = "pink", width = 0.3) + geom_line(color = '#FF6666', size = 2)
+```
+
+
+```{r}
+colnames(trash03)
+```
+
+연도별 일반 플라스틱 발생ㄹ
+```{r}
+nonre_plastic03 <- trash03 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic04 <- trash04 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic05 <- trash05 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic06 <- trash06 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic07 <- trash07 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic08 <- trash08 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic09 <- trash09 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic10 <- trash10 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic11 <- trash11 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic12 <- trash12 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic13 <- trash13 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic14 <- trash14 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic15 <- trash15 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic16 <- trash16 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+nonre_plastic17 <- trash17 %>% 
+  summarise(total_plastic = sum(플라스틱류))
+```
+
+```{r}
+nonre_plastic = bind_rows(nonre_plastic03, nonre_plastic04, nonre_plastic05, nonre_plastic06, nonre_plastic07,nonre_plastic08,nonre_plastic09,nonre_plastic10,nonre_plastic11,nonre_plastic12,nonre_plastic13,nonre_plastic14,nonre_plastic15,nonre_plastic16, nonre_plastic17)
+nonre_plastic['year'] = c(2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017)
+head(nonre_plastic)
+```
+
+
+연도별 재활용 플라스틱 발생량 
+```{r}
+re_plastic03 <- trash03 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic04 <- trash04 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic05 <- trash05 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic06 <- trash06 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic07 <- trash07 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic08 <- trash08 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic09 <- trash09 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic10 <- trash10 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic11 <- trash11 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic12 <- trash12 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic13 <- trash13 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic14 <- trash14 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic15 <- trash15 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic16 <- trash16 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+re_plastic17 <- trash17 %>% 
+  summarise(total_plastic = sum(재활용플라스틱류))
+```
+
+
+```{r}
+re_plastic = bind_rows(re_plastic03, re_plastic04, re_plastic05, re_plastic06, re_plastic07,re_plastic08,re_plastic09,re_plastic10, re_plastic11, re_plastic12,nonre_plastic13,re_plastic14,re_plastic15,re_plastic16, re_plastic17)
+re_plastic['year'] = c(2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017)
+head(re_plastic)
+```
+
+
+연간 총플라스틱배출량(일반 플라스틱 + 재활용 플라스틱) ~ 연간 배달량
+```{r}
+plot1 = ggplot(plastic, aes(x=year, y=total_plastic)) + geom_bar(stat = "identity", fill = "pink", width = 0.3) + geom_line(color = '#FF6666', size = 2) + scale_x_continuous(limits = c(2013, 2018)) + ggtitle('total plastic')
+plot2= ggplot(data = deli_amount, aes(x=year, y=total_used, group)) + geom_bar(stat = "identity", fill = "pink", width = 0.3) + geom_line(color = '#FF6666', size = 2) + ggtitle('delivery amount')
+grid.arrange(plot1, plot2, nrow=1, ncol=2)
+```
+
+연간 일반 플라스틱배출량 ~ 연간 배달량
+```{r}
+plot3 = ggplot(nonre_plastic, aes(x=year, y=total_plastic)) + geom_bar(stat = "identity", fill = "pink", width = 0.3) + geom_line(color = '#FF6666', size = 2) + scale_x_continuous(limits = c(2013, 2018)) + ggtitle('non recycle plastic')
+plot4= ggplot(data = deli_amount, aes(x=year, y=total_used, group)) + geom_bar(stat = "identity", fill = "pink", width = 0.3) + geom_line(color = '#FF6666', size = 2) + ggtitle('delivery amount')
+grid.arrange(plot3, plot4, nrow=1, ncol=2)
+
+```
+
+연간 재활용 플라스틱배출량 ~ 연간 배달량 
+```{r}
+plot5 = ggplot(re_plastic, aes(x=year, y=total_plastic)) + geom_bar(stat = "identity", fill = "pink", width = 0.3) + geom_line(color = '#FF6666', size = 2) + scale_x_continuous(limits = c(2013 , 2018)) + ggtitle('recycle plastic')
+plot6= ggplot(data = deli_amount, aes(x=year, y=total_used, group)) + geom_bar(stat = "identity", fill = "pink", width = 0.3) + geom_line(color = '#FF6666', size = 2) + ggtitle('delivery amount')
+
+grid.arrange(plot5, plot6, nrow=1, ncol=2)
+```
+
+```{r}
+grid.arrange(plot1, plot2, plot3, plot4, plot5, plot6, nrow = 3, ncol =2)
+```
+
+#ctrl+shift+k : rmarkdown'
