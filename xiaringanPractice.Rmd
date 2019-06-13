@@ -1,0 +1,179 @@
+---
+title: "***Save Sea Turtles***"
+subtitle: "*⚔<br/>DS Yonsei SP 2019</br>Final Project*"
+author: "Team 거북이"
+date: "(updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["dsXaringan.css", middlebury, hygge-duke]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+class: center, middle
+
+# Save Sea Turtles
+
+이동석, 이솔희, 배수한, 양효정, 김주연   
+</br>
+[Team Github](https://github.com/joynkim525/ds_project_saveseaturtle)
+
+---
+class: inverse, center, top
+background-image: url("https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/Medium_WW24369.jpg")
+background-size: cover
+
+<!---
+이미지 추가할때 raw path 따야함(안 그러면 오류남) - github url blob 부분 raw로 바꿔 나오는 url 첨부
+--->
+
+# Why we have to save </br> sea turtles?
+
+.footnote[
+.white[
+.bold[
+Image credit: © naturepl.com / Jordi Chias / WWF
+]]]
+
+<!---
+여기서 거북이가 플라스틱 때문에 죽어가고 있다 설명
+--->
+
+---
+# 목표
+
+한국에서 거북이를 위해 할 수 있는 일   
+
+.pull-left[
+
+기사 이미지 등등...</br>
+![이미지 예시](https://www.sisapress.com/news/photo/201904/184380_89617_5743.jpg)
+
+]
+
+.pull-right[
+.content-box[
+이미지 설명 등
+]]
+
+<!---
+세계 플라스틱 소비량 한국 순위.. 이런거 넣고 한국 위기의식 설명
+기사사진 첨부해도 좋고
+자료 모이는 거 봐서 바로바로 수정
+--->
+
+---
+
+# 플라스틱 소비를 줄이자
+
+--
+
+- 예상요인1
+
+--
+
+- 예상요인2
+
+--
+
+- 예상요인3
+
+--
+
+우리가 하려고 하는 목표 설명하기.
+
+<!---
+여기까지 서론
+--->
+
+---
+
+<!---
+여기서부터 본론
+r 코드와 결과물 이미지 첨부.
+--->
+
+# Data
+
+<!---
+모델링을 위해 사용한 데이터들 설명
+어디서 받아왔는지... 뭐 이런것도
+--->
+
+종속변수: 플라스틱 폐기물 배출량(n년치)   
+독립변수: 쓴거 리스트 달아놓기
+
+---
+
+# EDA
+
+전처리과정 따로 추가해야 하나?   
+나중에 알아서 하기
+
+---
+
+# 한거 1
+
+<!---
+처리 어떻게 했는지 r코드 첨부하기
+한거 있으면 이 파트에 슬라이드 첨부해서 다 설명
+--->
+.pull-left[
+.full-width[
+```{r}
+#예시 R 코드
+plot(cars)
+```
+]]
+
+.pull-right[
+.content-box-yellow[
+#### 코드 제목 예시
+분석 설명 예시
+- 왜 했는지
+- 어떻게 했는지
+- 뭘 알아냈는지... 등등
+]
+]
+
+---
+
+# 한거 2
+
+분석과정 넣기
+
+<!--- 회귀분석? 
+한거 있으면 여기 슬라이드 추가로 다 넣기
+--->
+
+---
+
+# 분석 결론
+
+분석한 결과
+
+---
+
+# How to save sea turtles
+
+### .orange[현실 적용 방안]
+
+어떻게 현실에 적용시킬 수 있을까
+
+---
+class: center, middle
+
+참고문헌?
+
+---
+class: inverse, center, middle
+
+# Q & A
+
+---
+class: maya-back, center, middle
+
+# .white[Thank you]
+
+
