@@ -1,0 +1,98 @@
+﻿/* fonts - 나눔고딕 이외에는 깨지는데 왜 깨지지 */
+
+@import url(https://fonts.googleapis.com/css?family=Nanum+Gothic);
+@import url(https://fonts.googleapis.com/css?family=Black+Han+Sans);
+@import url(https://fonts.googleapis.com/css?family=Yeon+Sung);
+
+body { font-family: 'Yeon Sung', 'Black Han Sans', 'Nanum Gothic', sans-serif ; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+p {
+  font-family: 'Nanum Gothic', sans-serif;
+  font-size: 20px;
+}
+
+
+/* colors */
+
+.maya {
+  color: #73CEFB;
+}
+
+.cornflower {
+  color: #6593F5;
+}
+
+.turquoise {
+  color: #3FE0D0;
+}
+
+
+/* slide templates */
+
+.lineheight {
+line-height: 1.5;
+}
+
+.maya-b {
+  background-color: #73CEFB;
+}
+
+.cornflower-b {
+  background-color: #6593F5;
+}
+
+.turquoise-b {
+  background-color: #3FE0D0;
+}
+
+
+
+/* important code slightly blue */
+
+.remark-code-line-highlighted {
+  background-color: #73CEFB !important;
+}
+
+
+
+/* content boxes */
+
+
+.content-box-maya,
+.content-box-cornflower,
+.content-box-turquoise {
+    border-radius: 15px;
+    margin: 0px;
+    overflow: hidden;
+    padding: 15px;
+    width: 100%;
+}
+
+.content-box-maya {
+    background-color: #73CEFB;
+}
+
+.content-box-maya {
+    background-color: #73CEFB;
+}
+
+.content-box-maya {
+    background-color: #73CEFB;
+}
+
+
+
+/* 기본 템플릿 수정 */
+
+
+
+/* 참고 
+https://github.com/yihui/xaringan/tree/master/inst/rmarkdown/templates/xaringan/resources
+
+https://github.com/yihui/xaringan/blob/master/inst/rmarkdown/templates/xaringan/resources/hygge-duke.css
+https://github.com/yihui/xaringan/blob/master/inst/rmarkdown/templates/xaringan/resources/duke-blue.css
+*/
