@@ -1,0 +1,135 @@
+---
+title: "one person"
+author: '2015122016'
+date: "2019년 6월 15일"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(gridExtra)
+```
+
+```{r total population}
+pop <- read.csv("file:///C:/Users/Lucy Jooyeon Kim/Desktop/ds_yonsei/project/data/1인가구_시도/00~17 총인구수.csv",
+                stringsAsFactors=F)
+pop <- pop[-1,]
+glimpse(pop)
+for(i in 2:19){
+  pop[,i] <- as.numeric(pop[,i])}
+pop[9,2:13] <- 0
+```
+
+```{r the number of home with one person}
+one00 <- read.csv("file:///C:/Users/Lucy Jooyeon Kim/Desktop/ds_yonsei/project/data/1인가구_시도/00~10 시도 1인 가구수.csv",
+                  stringsAsFactors = F)
+one15 <- read.csv("file:///C:/Users/Lucy Jooyeon Kim/Desktop/ds_yonsei/project/data/1인가구_시도/15~17 시도 1인 가구수.csv",
+                  stringsAsFactors = F)
+
+one00 <- one00[-1,]
+one00 <- one00[,-c(2,3)]
+one15 <- one15[-1,]
+one15 <- one15[,-2]
+colnames(one00) <- c("region", "2000", "2005", "2010")
+colnames(one15) <- c("region", "2015", "2016", "2017")
+one00$region[17] <- c("제주특별자치도")
+
+one <- one15 %>% left_join(one00, by="region")
+glimpse(one)
+for(i in 2:7){
+  one[,i] <- as.numeric(one[,i])}
+one[9, 5:7] <- 0
+one$'2001' <- rep(0, dim(one)[1])
+one$'2002' <- rep(0, dim(one)[1])
+one$'2003' <- rep(0, dim(one)[1])
+one$'2004' <- rep(0, dim(one)[1])
+one$'2006' <- rep(0, dim(one)[1])
+one$'2007' <- rep(0, dim(one)[1])
+one$'2008' <- rep(0, dim(one)[1])
+one$'2009' <- rep(0, dim(one)[1])
+one$'2011' <- rep(0, dim(one)[1])
+one$'2012' <- rep(0, dim(one)[1])
+one$'2013' <- rep(0, dim(one)[1])
+one$'2014' <- rep(0, dim(one)[1])
+one <- one[,c(1,5,8:11,6,12:15,7,16:19,2:4)]
+  
+one$'2001' <- one[,2] + {(one[,7]-one[,2])*0.2 + (one[,12]-one[,2])*0.1 + (one[,17]-one[,2])/15}/3
+one$'2002' <- one[,2] + {(one[,7]-one[,2])*0.4 + (one[,12]-one[,2])*0.2 + (one[,17]-one[,2])/15*2}/3
+one$'2003' <- one[,2] + {(one[,7]-one[,2])*0.6 + (one[,12]-one[,2])*0.3 + (one[,17]-one[,2])/15*3}/3
+one$'2004' <- one[,2] + {(one[,7]-one[,2])*0.8 + (one[,12]-one[,2])*0.4 + (one[,17]-one[,2])/15*4}/3
+one$'2006' <- one[,2] + {(one[,7]-one[,2])*1.2 + (one[,12]-one[,2])*0.6 + (one[,17]-one[,2])/15*6}/3
+one$'2007' <- one[,2] + {(one[,7]-one[,2])*1.4 + (one[,12]-one[,2])*0.7 + (one[,17]-one[,2])/15*7}/3
+one$'2008' <- one[,2] + {(one[,7]-one[,2])*1.6 + (one[,12]-one[,2])*0.8 + (one[,17]-one[,2])/15*8}/3
+one$'2009' <- one[,2] + {(one[,7]-one[,2])*1.8 + (one[,12]-one[,2])*0.9 + (one[,17]-one[,2])/15*9}/3
+one$'2011' <- one[,2] + {(one[,7]-one[,2])*2.2 + (one[,12]-one[,2])*1.1 + (one[,17]-one[,2])/15*11}/3
+one$'2012' <- one[,2] + {(one[,7]-one[,2])*2.4 + (one[,12]-one[,2])*1.2 + (one[,17]-one[,2])/15*12}/3
+one$'2013' <- one[,2] + {(one[,7]-one[,2])*2.6 + (one[,12]-one[,2])*1.3 + (one[,17]-one[,2])/15*13}/3
+one$'2014' <- one[,2] + {(one[,7]-one[,2])*2.8 + (one[,12]-one[,2])*1.4 + (one[,17]-one[,2])/15*14}/3
+one[9, 2:13] <- 0
+one[9, 14:16] <- pop[9,14:16]*0.1
+one[,2:19] <- round(one[,2:19])
+for(i in 2:19){
+  one[1,i] <- sum(one[2:18,i])
+}
+```
+
+```{r import plastic data}
+dir <- ("C:\\Users\\Lucy Jooyeon Kim\\Desktop\\ds_yonsei\\project\\trash_v03")
+file_lst <- list.files(dir)
+plastic <- data.frame()
+re_plastic <- data.frame()
+nonre_plastic <- data.frame()
+
+for(file in file_lst){
+  print(file)
+  temp <- read.csv(paste(dir, file, sep="\\"),
+                   header=T, sep=",", stringsAsFactors = F)
+  plat <- temp$총플라스틱배출량 %>% sum()
+  plastic <- rbind(plastic, plat)
+  re <- temp$재활용플라스틱류 %>% sum()
+  re_plastic <- rbind(re_plastic, re)
+  nonre <- temp$플라스틱류 %>% sum()
+  nonre_plastic <- rbind(nonre_plastic, nonre)
+}
+```
+
+```{r plastic ~ one}
+one_yr <- one[1,5:19] %>% unlist()
+per_year <- cbind(one_yr, plastic, re_plastic, nonre_plastic)
+per_year$year <- c(2003:2017)
+colnames(per_year)[2:4] <- c("plastic", "re_plastic", "nonre_plastic")
+glimpse(per_year)
+
+plot1 <- per_year %>% ggplot(aes(x=year, y=one_yr)) +
+  geom_bar(stat = "identity", fill = "blue", width = 0.3)
+plot2 <- per_year %>% ggplot(aes(x=year, y=plastic)) +
+  geom_bar(stat = "identity", fill = "pink", width = 0.3)
+plot3 <- per_year %>% ggplot(aes(x=year, y=re_plastic)) +
+  geom_bar(stat = "identity", fill = "green", width = 0.3)
+plot4 <- per_year %>% ggplot(aes(x=year, y=nonre_plastic)) +
+  geom_bar(stat = "identity", fill = "purple", width = 0.3)
+grid.arrange(plot1, plot2,plot3, plot4, nrow=2, ncol=2)
+```
+
+```{r plastic ~ totla population}
+pop_yr <- pop[1,5:19] %>% unlist()
+per_year <- cbind(pop_yr, plastic, re_plastic, nonre_plastic)
+per_year$year <- c(2003:2017)
+colnames(per_year)[2:4] <- c("plastic", "re_plastic", "nonre_plastic")
+glimpse(per_year)
+
+plot1 <- per_year %>% ggplot(aes(x=year, y=pop_yr)) +
+  geom_bar(stat = "identity", fill = "blue", width = 0.3)
+plot2 <- per_year %>% ggplot(aes(x=year, y=plastic)) +
+  geom_bar(stat = "identity", fill = "pink", width = 0.3)
+plot3 <- per_year %>% ggplot(aes(x=year, y=re_plastic)) +
+  geom_bar(stat = "identity", fill = "green", width = 0.3)
+plot4 <- per_year %>% ggplot(aes(x=year, y=nonre_plastic)) +
+  geom_bar(stat = "identity", fill = "purple", width = 0.3)
+grid.arrange(plot1, plot2,plot3, plot4, nrow=2, ncol=2)
+```
+
