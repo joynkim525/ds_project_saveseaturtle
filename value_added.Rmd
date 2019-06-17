@@ -1,0 +1,225 @@
+---
+title : plastic vs value_added
+output:
+  html_document: 
+    toc: yes
+    toc_float: true
+    highlight: tango
+    code_folding: show
+    number_section: true
+    self_contained: true
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+```
+
+```{r}
+value_added = read.csv("C:/Users/thfgm/Desktop/데사입/독립변수 데이터셋/value_added_new.csv", header = T)
+head(value_added)
+colnames(value_added)
+```
+
+```{r}
+value_added <- value_added[-1,]
+head(value_added)
+```
+
+
+데이터 포맷(just have changed excel file...(star)
+```{r}
+year <- rep(0, dim(value_added)[1]*16)
+region <- rep(0, dim(value_added)[1]*16)
+value <- rep(0, dim(value_added)[1]*16)
+year
+year[0:17] <- rep(2002, length(year[0:17]))
+value[0:17] <- value_added[,4]
+year[18:34] <- rep(2003, length(year[0:17]))
+year[35:51] <- rep(2004, length(year[0:17]))
+year[52:68] <- rep(2005, length(year[0:17]))
+year[69:85] <- rep(2006, length(year[0:17]))
+year[86:102] <- rep(2007, length(year[0:17]))
+year[103:119] <- rep(2008, length(year[0:17]))
+year[120:136] <- rep(2009, length(year[0:17]))
+year[137:153] <- rep(2010, length(year[0:17]))
+year[154:170] <- rep(2011, length(year[0:17]))
+year[171:187] <- rep(2012, length(year[0:17]))
+year[188:204] <- rep(2013, length(year[0:17]))
+year[205:221] <- rep(2014, length(year[0:17]))
+year[222:238] <- rep(2015, length(year[0:17]))
+year[239:255] <- rep(2016, length(year[0:17]))
+year[256:272] <- rep(2017, length(year[0:17]))
+
+region <- rep(c('서울', '인천', '경기', '부산', '대구', '광주', '대전', '울산', '세종', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'), 16)
+
+```
+
+```{r}
+head(value_added)
+```
+
+
+1. 고무-플라스틱 부가가치
+```{r}
+ggplot(value_added, aes(x=year, y=value_added, group = region, colour = region)) +
+    geom_line()
+```
+```{r}
+seoul <- value_added %>% 
+  group_by(region) %>% 
+  filter(region == '서울') %>% 
+  select(region, year, value_added)
+gyeonggi <- value_added %>% 
+  group_by(region) %>% 
+  filter(region == '경기') %>% 
+  select(region, year, value_added)
+incheon <- value_added %>% 
+  group_by(region) %>% 
+  filter(region == '인천') %>% 
+  select(region, year, value_added)
+
+서울 = ggplot(seoul, aes(x=year, y=value_added, group=region, colour = region)) + geom_line() + geom_point()
+경기 = ggplot(gyeonggi, aes(x=year, y=value_added, group=region, colour = region)) + geom_line() + geom_point()
+인천 = ggplot(incheon, aes(x=year, y=value_added, group=region, colour = region)) + geom_line() + geom_point()
+grid.arrange(서울, 경기, 인천,  nrow=1,ncol=3)
+```
+
+2. 플라스틱
+
+```{r}
+trash03 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2003.csv')
+trash04 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2004.csv')
+trash05 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2005.csv')
+trash06 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2006.csv')
+trash07 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2007.csv')
+trash08 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2008.csv')
+trash09 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2009.csv')
+trash10 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2010.csv')
+trash11 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2011.csv')
+trash12 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2012.csv')
+trash13 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2013.csv')
+trash14 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2014.csv')
+trash15 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2015.csv')
+trash16 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2016.csv')
+trash17 = read.csv('C:/Users/thfgm/Desktop/데사입/trash_new/trash2017.csv')
+```
+
+
+플라스틱 데이터만 합치기
+```{r}
+trash03 <- trash03 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash04 <- trash04 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash05 <- trash05 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash06 <- trash06 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash07 <- trash07 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash08 <- trash08 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash09 <- trash09 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash10 <- trash10 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash11 <- trash11 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash12 <- trash12 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash13 <- trash13 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash14 <- trash14 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash15 <- trash15 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash16 <- trash16 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash17 <- trash17 %>% 
+  select(시도, 시군구, 플라스틱류, 재활용플라스틱류, year, 총플라스틱배출량)
+trash <- bind_rows(trash03, trash04, trash05, trash06, trash07, trash08, trash09, trash10, trash11, trash12, trash13, trash14, trash15, trash16, trash17)
+
+tail(trash)
+```
+
+
+연도별 서울 플라스틱 발생량 
+```{r}
+seoul <- trash %>%
+  group_by(year) %>% 
+  filter(시도 == '서울')
+nonre_seoul <- seoul %>% 
+  summarise(year_nonre = sum(플라스틱류))
+re_seoul <- seoul %>%
+  summarise(year_re = sum(재활용플라스틱류))
+total_seoul <- seoul %>% 
+  summarise(year_total = sum(총플라스틱배출량))
+
+seoul1 = ggplot(nonre_seoul, aes(x=year, y=year_nonre)) + geom_line(colour = 'pink')
+seoul2 = ggplot(re_seoul, aes(x=year, y=year_re)) + geom_line(colour = 'blue')
+seoul3 = ggplot(total_seoul, aes(x=year, y=year_total)) + geom_line(colour = 'green')
+grid.arrange(seoul1, seoul2, seoul3, nrow = 1, ncol =3)
+```
+
+연도별 인천 플라스틱 발생량
+```{r}
+incheon <- trash %>%
+  group_by(year) %>% 
+  filter(시도 == '인천')
+nonre_incheon <- incheon %>% 
+  summarise(year_nonre = sum(플라스틱류))
+re_incheon <- incheon %>%
+  summarise(year_re = sum(재활용플라스틱류))
+total_incheon <- incheon %>% 
+  summarise(year_total = sum(총플라스틱배출량))
+
+incheon1 = ggplot(nonre_incheon, aes(x=year, y=year_nonre)) + geom_line(colour = 'pink')
+incheon2 = ggplot(re_incheon, aes(x=year, y=year_re)) + geom_line(colour = 'blue')
+incheon3 = ggplot(total_incheon, aes(x=year, y=year_total)) + geom_line(colour = 'green')
+grid.arrange(incheon1, incheon2, incheon3, nrow = 1, ncol =3)
+```
+
+연도별 경기 플라스틱 발생량 
+```{r}
+gyeonggi <- trash %>%
+  group_by(year) %>% 
+  filter(시도 == '경기')
+nonre_gyeonggi <- gyeonggi %>% 
+  summarise(year_nonre = sum(플라스틱류))
+re_gyeonggi <- gyeonggi %>%
+  summarise(year_re = sum(재활용플라스틱류))
+total_gyeonggi <- gyeonggi %>% 
+  summarise(year_total = sum(총플라스틱배출량))
+
+gyeonggi1 = ggplot(nonre_gyeonggi, aes(x=year, y=year_nonre)) + geom_line(colour = 'pink')
+gyeonggi2 = ggplot(re_gyeonggi, aes(x=year, y=year_re)) + geom_line(colour = 'blue')
+gyeonggi3 = ggplot(total_gyeonggi, aes(x=year, y=year_total)) + geom_line(colour = 'green')
+grid.arrange(gyeonggi1, gyeonggi2, gyeonggi3, nrow = 1, ncol =3)
+```
+
+
+3. 결론(서울, 인천, 경기만)
+서울 연도별 플라스틱 vs 고무-플라스틱 부가가치
+```{r}
+grid.arrange(seoul1, seoul2, seoul3, 서울, nrow=2, ncol=2)
+```
+
+인천 연도별 플라스틱 vs 고무-플라스틱 부가가치
+```{r}
+grid.arrange(incheon1, incheon2, incheon3, 인천, nrow=2,ncol=2)
+```
+
+경기 연도별 플라스틱 vs 고무-플라스틱 부가가치
+```{r}
+grid.arrange(gyeonggi1, gyeonggi2, gyeonggi3, 경기, nrow=2, ncol=2)
+```
+
+=> 딱히 의미가 없당,,,,
