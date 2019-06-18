@@ -20,6 +20,6 @@
 3. 
 
 ### Xaringan
-ppt용 css 파일 & 예시 html 추가함. 로컬 워킹 디렉토리에 css 파일 있어야 예시처럼 돌아감!
-ppt에 사용 가능한 option은 dsXaringan.css 와 Middlebury template(패키지 내장)에 있는 옵션 전부.
+ppt용 css 파일 & 예시 html 추가함. 로컬 워킹 디렉토리에 css 파일 있어야 예시처럼 돌아감!   
+ppt에 사용 가능한 option은 dsXaringan.css 와 Middlebury template(패키지 내장)에 있는 옵션 전부.   
 전반적 템플릿 기반은 Middlebury, dsXaringan file은 몇몇 옵션만 추가함
