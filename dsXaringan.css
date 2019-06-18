@@ -1,0 +1,145 @@
+﻿/* fonts - 나눔고딕 이외에는 깨져서 나눔고딕으로 통일함 */
+
+@import url(https://fonts.googleapis.com/css?family=Nanum+Gothic);
+@import url(https://fonts.googleapis.com/css?family=Black+Han+Sans);
+@import url(https://fonts.googleapis.com/css?family=Yeon+Sung);
+
+body { font-family: 'Nanum Gothic', sans-serif ; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+p {
+  font-family: 'Nanum Gothic', sans-serif;
+  font-size: 20px;
+}
+
+
+
+
+/* font size */
+
+.Large { font-size: 180% }
+.large { font-size: 130% }
+.small { font-size: 90% }
+.footnotesize { font-size: 80% }
+.scriptsize { font-size: 70% }
+.tiny { font-size: 60% }
+
+.bold { font-weight: bold; }
+.bolder { font-weight: bolder; }
+
+
+
+
+/* important code */
+
+.remark-code-line-highlighted { background-color: #ffd960 !important; }
+
+
+
+
+/* colors */
+.maya { color: #73CEFB; }
+.cornflower { color: #6593F5; }
+.turquoise { color: #3FE0D0; }
+
+.yellow { color: #ffd960; }
+.grey { color: #e2e2e2; }
+.red { color: #ff7a7a; }
+
+/* middlebury colors */
+.title-blue { color: #0D395F; }
+.blue-1 { color: #75A3CD; }
+.blue-2 { color: #97BBD5; }
+
+
+
+
+/* slide templates */
+
+/* 줄간격 1.5 - 내용 여러 줄 있는 슬라이드에 적용하기 */ 
+.lineheight { line-height: 1.5; }
+
+/* 배경 색 template */
+.maya-b { background-color: #73CEFB; }
+.cornflower-b { background-color: #6593F5; }
+
+
+
+
+/* content boxes: hygge-duke를 수정 */
+
+.content-box { 
+    box-sizing: content-box;
+    	background-color: #e2e2e2;
+}
+
+.content-box-maya,
+.content-box-cornflower,
+.content-box-grey,
+.content-box-yellow,
+.content-box-red,
+.content-box-blue-1,
+.content-box-blue-2 {
+    border-radius: 15px;
+    margin: 5px;
+    overflow: hidden;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.content-box-maya {
+    background-color: #73CEFB;
+}
+
+.content-box-cornflower {
+    background-color: #6593F5;
+}
+
+.content-box-grey {
+    background-color: #e2e2e2;
+}
+
+.content-box-yellow {
+    background-color: #ffd960;
+}
+
+.content-box-red { 
+    background-color: #ff7a7a; 
+}
+
+.conten-box-blue-1 {
+    background-color: #75A3CD; 
+}
+
+.content-box-blue-2 { 
+    background-color: #97BBD5; 
+}
+
+
+
+
+/* 기타 옵션 */ 
+
+.full-width {
+    display: flex;
+    width: 100%;
+    flex: 1 1 auto;
+}
+
+.opacity{
+    opacity: 0.5;
+}
+
+
+
+
+
+/* References
+https://github.com/yihui/xaringan/tree/master/inst/rmarkdown/templates/xaringan/resources
+
+https://github.com/yihui/xaringan/blob/master/inst/rmarkdown/templates/xaringan/resources/hygge-duke.css
+https://github.com/yihui/xaringan/blob/master/inst/rmarkdown/templates/xaringan/resources/duke-blue.css
+*/

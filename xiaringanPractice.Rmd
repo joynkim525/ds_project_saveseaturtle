@@ -1,0 +1,227 @@
+---
+title: "***Save Sea Turtles***"
+subtitle: "*⚔<br/>DS Yonsei SP 2019</br>Final Project*"
+author: "Team 거북이"
+date: "(updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["dsXaringan.css", middlebury]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+class: center, middle, lineheight
+
+# Save Sea Turtles
+
+이동석, 이솔희, 배수한, 양효정, 김주연   
+[Team Github](https://github.com/joynkim525/ds_project_saveseaturtle)
+
+---
+class: inverse, center, top
+background-image: url("https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/Medium_WW24369.jpg")
+background-size: cover
+
+<!---
+이미지 추가할때 raw path 따야함(안 그러면 오류남) - github url blob 부분 raw로 바꿔 나오는 url 첨부
+--->
+
+# Why we have to save </br> sea turtles?
+
+.footnote[
+.white[
+.bolder[
+Image credit: © naturepl.com / Jordi Chias / WWF
+]]]
+
+<!---
+여기서 거북이가 플라스틱 때문에 죽어가고 있다 설명
+--->
+
+---
+class: inverse, center, top
+background-image: url("https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/photo-1526951521990-620dc14c214b.jpg")
+
+---
+class: lineheight
+
+# 해양 플라스틱 오염 현황
+
+.pull-left[
+크롤링 다듬을 수 있으면 결과가 여기 들어가도 좋을 듯.   
+아래는 예시 이미지
+</br>
+![이미지 예시](https://www.sisapress.com/news/photo/201904/184380_89617_5743.jpg)
+
+]
+
+.pull-right[
+.content-box-grey[
+#### 이미지 설명 등
+오염 실태와 대책들 같은 거?   
+]]
+
+<!---
+어차피 서론이라 크게 중요한 부분은 아닐 듯.
+--->
+
+---
+class: lineheight
+
+# 플라스틱 오염 대책
+
+--
+
+- 예상요인1
+
+--
+
+- 예상요인2
+
+--
+
+- 예상요인3
+
+--
+</br></br></br>
+.bold[.center[.Large[.blue-1["최종 목표"]]]]
+
+
+<!--- 여기까지 서론 --->
+
+---
+class: lineheight
+<!--- 여기서부터 본론
+r 코드와 결과물 첨부. --->
+
+# Data
+
+<!--- 모델링을 위해 사용한 데이터들 설명
+어디서 받아왔는지... 뭐 이런것도 --->
+
+--
+
+.pull-left[
+### .blue-1[종속변수]
+- 시도별 플라스틱 폐기물 배출량(2002~2017)   
+출처: 
+]
+
+--
+
+.pull-right[
+### .blue-1[독립변수]
+쓴거 리스트 달아놓기   
+출처, 연도 등등 간략하게 같이!
+]
+
+
+---
+class: lineheight
+
+# EDA
+
+전처리과정 이미지(보여줄 코드가 있으면 함께)로 추가.
+
+---
+class: lineheight
+
+# 분석과정 1
+
+좌측에 세로로 긴 차트가 들어가거나 설명할게 길 때.
+<!--- 처리 어떻게 했는지 r코드 첨부하기
+한거 있으면 슬라이드 첨부해서 다 설명 --->
+
+.left-column[
+```{r}
+#예시 R 코드
+plot(cars)
+```
+]
+
+.right-column[
+.content-box-yellow[ #### 코드 제목 예시
+분석 설명 예시
+- 왜 했는지
+- 어떻게 했는지
+- 뭘 알아냈는지... 등등
+]
+]
+
+---
+class: lineheight
+
+# 분석과정 2
+화면을 정확히 반반으로 나누고 싶을 때.
+
+<!--- 처리 어떻게 했는지 r코드 첨부하기
+한거 있으면 슬라이드 첨부해서 다 설명 --->
+
+.pull-left[
+```{r}
+#예시 R 코드
+plot(cars) 
+```
+]
+
+.pull-right[
+.content-box-yellow[ #### 코드 제목 예시
+분석 설명 예시
+- 왜 했는지
+- 어떻게 했는지
+- 뭘 알아냈는지... 등등
+]
+]
+
+
+---
+class: lineheight
+# 분석과정 3
+
+가로로 긴 차트가 들어갈 때. 크기는 chunk 에서 옵션을 사용해서 변경하던가 할 것.
+```{r, fig.height=3}
+#예시 R 코드, 특정 라인 강조 추가
+x <- 1
+plot(cars) #<<
+```
+
+.content-box-grey[
+.red[코드 설명]
+]
+
+---
+class: lineheight
+# 결론
+
+.Large[분석한 결과 종합해서 정리하는 파트.]
+
+.large[
++ 앞서 한 것들 결과 요약
++ 요약
+]
+
+---
+class: lineheight
+# How to save sea turtles
+### .blue-1[현실 적용 방안]
+결과의 현실적인 해석.
+
+---
+class: lineheight
+# References
+참고문헌 필요시 작성
+
+---
+class: center, middle
+background-color: #0D395F
+
+# .blue-2[Q & A]
+
+---
+class: inverse, bottom
+background-image: url("https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/photo-1518467166778-b88f373ffec7.jpg")
+background-size: cover
+
+# Thank you!
+<br>
