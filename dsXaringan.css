@@ -10,11 +10,30 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
-p {
-  font-family: 'Nanum Gothic', sans-serif;
-  font-size: 20px;
+h1 {
+    margin-bottom: 0;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
+h2, h3, h4 {
+    margin-bottom: 5px;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+p {
+  font-family: 'Nanum Gothic', sans-serif;
+  font-size: 16px;
+}
+
+code.r{
+  font-size: 12px;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+}
 
 
 
@@ -26,9 +45,12 @@ p {
 .footnotesize { font-size: 80% }
 .scriptsize { font-size: 70% }
 .tiny { font-size: 60% }
+.smol { font-size: 40% }
 
 .bold { font-weight: bold; }
 .bolder { font-weight: bolder; }
+
+
 
 
 
@@ -133,8 +155,9 @@ p {
     opacity: 0.5;
 }
 
-
-
+.title-slide {
+  background-image: none;
+}
 
 
 /* References

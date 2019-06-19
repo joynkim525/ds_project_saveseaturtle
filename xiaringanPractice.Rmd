@@ -13,10 +13,16 @@ output:
 ---
 class: center, middle, lineheight
 
+```{r 무시하세용, include=FALSE, eval=FALSE}
+library(xaringan)
+xaringan::inf_mr()
+```
+
+
 # Save Sea Turtles
 
-이동석, 이솔희, 배수한, 양효정, 김주연   
-[Team Github](https://github.com/joynkim525/ds_project_saveseaturtle)
+.bold[.large[이동석, 이솔희, 배수한, 양효정, 김주연]]   
+.bold[[Team Github](https://github.com/joynkim525/ds_project_saveseaturtle)]
 
 ---
 class: inverse, center, top
@@ -27,7 +33,7 @@ background-size: cover
 이미지 추가할때 raw path 따야함(안 그러면 오류남) - github url blob 부분 raw로 바꿔 나오는 url 첨부
 --->
 
-# Why we have to save </br> sea turtles?
+#Why we have to save </br> sea turtles?
 
 .footnote[
 .white[
@@ -35,103 +41,348 @@ background-size: cover
 Image credit: © naturepl.com / Jordi Chias / WWF
 ]]]
 
-<!---
-여기서 거북이가 플라스틱 때문에 죽어가고 있다 설명
---->
+
+.white[(((((((여기서 거북이가 플라스틱 때문에 죽어가고 있다 설명))))))]
 
 ---
-class: inverse, center, top
+class: inverse, center, middle
 background-image: url("https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/photo-1526951521990-620dc14c214b.jpg")
+background-size: cover
+
+.white[((((((((플라스틱!! 바다오염!!! 거북이 불쌍해!!! </br>
+전 세계적 문제라는 거 한번 흘려주면 다음 슬라이드로 이어지기 좋을 것 같아요))))))))]
 
 ---
 class: lineheight
 
-# 해양 플라스틱 오염 현황
-
+# 플라스틱 공화국
 .pull-left[
-크롤링 다듬을 수 있으면 결과가 여기 들어가도 좋을 듯.   
-아래는 예시 이미지
-</br>
-![이미지 예시](https://www.sisapress.com/news/photo/201904/184380_89617_5743.jpg)
+![세계 플라스틱](https://www.sisapress.com/news/photo/201904/184380_89617_5743.jpg)
 
-]
-
-.pull-right[
-.content-box-grey[
-#### 이미지 설명 등
-오염 실태와 대책들 같은 거?   
+.bold[.footnote[Image credit: © 시사저널]
 ]]
 
-<!---
-어차피 서론이라 크게 중요한 부분은 아닐 듯.
---->
+.pull-right[
+
+.full-width[![한국 플라스틱](http://img.hani.co.kr/imgdb/resize/2018/0403/00503293_20180403.JPG)]
+
+
+.small[
+</br>
+- 2050년까지 전 세계에서 120억 톤의 플라스틱 쓰레기가 발생할 것
+<!--- 지난해 UN 보고서, http://www.sisajournal.com/news/articleView.html?idxno=184380 --->
+- 한국 플라스틱 사용량, 2050년에는 지금의 20배로 증가할 것
+<!--- 홍수열 자원순환사회경제연구소 소장, http://www.hani.co.kr/arti/PRINT/838969.html --->
+]
+
+
+.bold[.footnote[Image credit: © hani.co.kr / 이재훈 기자 ]]
+]
 
 ---
 class: lineheight
+# 한국 플라스틱 배출 현황
+#### 시계열 그래프를 통해 변화 동향 확인
+```{r, eval =FALSE}
+# 전국 플라스틱 폐기물 배출량 시도표
+whole <- filter(a, 시도별 == '합계')
 
-# 플라스틱 오염 대책
+ggplot(data = whole, aes(x = year, y = 플라스틱))+
+  geom_line(color = "#00AFBB", size = 2)
 
---
+# 플라스틱 배출량과 총 폐기물 배출량 함께보기
+df <- whole %>%
+  select(year, 플라스틱, 총쓰레기) %>%
+  gather(key = "variable", value = "value", -year)
 
-- 예상요인1
+ggplot(df, aes(x = year, y = value)) + 
+  geom_line(aes(color = variable), size = 1) +
+  scale_color_manual(values = c("#00AFBB", "#E7B800")) +
+  labs(title='연도별 플라스틱 배출량 및 총 쓰레기 배출량' )
+```
+---
+class: lineheight
+# 한국 플라스틱 배출 현황
+#### 시계열 그래프를 통해 변화 동향 확인
+``` {r, eval=F}
+# 총 쓰레기 배출량 대비 플라스틱 배출량
+ggplot(data = whole, aes(x = year, y = 플라스틱/총쓰레기))+
+  geom_line(color = "#00AFBB", size = 2)+
+  labs(title='' )+
+  labs(title='총쓰레기 대비 플라스틱' )
 
---
+# 시도별 플라스틱 배출량
+library(dplyr)
+bg <- group_by(a, 시도별)
+bgs <- select(bg, 시도별, year, 플라스틱)
+bgs1 <- filter(bgs, 시도별 != '합계')
+ggplot(bgs1, aes(x = year, y = 플라스틱)) + 
+  geom_line(aes(color = 시도별), size = 1) +
+  labs(title='시도별 플라스틱 배출량' )
+```
 
-- 예상요인2
-
---
-
-- 예상요인3
-
---
-</br></br></br>
-.bold[.center[.Large[.blue-1["최종 목표"]]]]
-
-
-<!--- 여기까지 서론 --->
+---
+### 총 쓰레기 배출량 대비 플라스틱 배출량
+</br>
+.center[.middle[
+![시계열일반](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EC%B4%9D%EC%93%B0%EB%A0%88%EA%B8%B0%EB%8C%80%EB%B9%84%ED%94%8C%EB%9D%BC%EC%8A%A4%ED%8B%B1.png)
+]]
+---
+### 시도별 플라스틱 배출량
+</br>
+.center[.middle[
+![시도별배출량](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EC%8B%9C%EB%8F%84%EB%B3%84%20%ED%94%8C%EB%9D%BC%EC%8A%A4%ED%8B%B1%20%EB%B0%B0%EC%B6%9C%EB%9F%89.png)
+]]
 
 ---
 class: lineheight
-<!--- 여기서부터 본론
-r 코드와 결과물 첨부. --->
+# 관련 기사 크롤링
+```{r, eval=F}
+# 2000년대 기사
+tw = list()
+for ( j in 2:9){
+  title_list<-c()
+  for (i in 1:30){
+    title_list[i] <- paste('https://search.naver.com/search.naver?&where=news&query=%ED%94%8C%EB%9D%BC%EC%8A%A4%ED%8B%B1&sm=tab_pge&sort=0&photo=0&field=0&reporter_article=&pd=3&ds=200',j,'.01.01&de=200',j,'.12.31&docid=&nso=so:r,p:from200',j,'0101to200',j,'1231,a:all&mynews=1&cluster_rank=10&start=',i,'1&refresh_start=0', sep="")
+  }
 
-# Data
+  a=list()
+  for (i in 1:length(title_list)){
+    res <- GET(url=title_list[i],
+               user_agent(agent='Googlebot/2.1 (+http://www.google.com/bot.html)'))
+    status_code(res)
+    text <- read_html(x=res, encoding = "ko_KR.UTF-8") %>% 
+      html_nodes(xpath='//*[@class="type01"]/li/dl/dt/a') %>% 
+      html_text()
+    text <- gsub("[\r\n\t]","", text)
+    text <- gsub("[[:punct:]]","", text)
+    text <- gsub("[[:cntrl:]]","",text)
+    text <-   str_split(text, pattern=" ")
+    a[[i]]<-text
+  }
+  tw[[j]] <- table(unlist(a)) %>% 
+    as.data.frame(stringsAsFactors = FALSE) %>% 
+    rename('keyword'='Var1', 'freq'='Freq')
+}
+```
+---
+class: lineheight
+# 관련 기사 크롤링
+```{r, eval=F}
+# 2010년대 기사
+for ( j in 10:17){
+  title_list<-c()
+  for (i in 1:30){
+    title_list[i] <- paste('https://search.naver.com/search.naver?&where=news&query=%ED%94%8C%EB%9D%BC%EC%8A%A4%ED%8B%B1&sm=tab_pge&sort=0&photo=0&field=0&reporter_article=&pd=3&ds=20',j,'.01.01&de=20',j,'.12.31&docid=&nso=so:r,p:from20',j,'0101to20',j,'1231,a:all&mynews=1&cluster_rank=10&start=',i,'1&refresh_start=0', sep="")
+  }
+  
+  a=list()
+  for (i in 1:length(title_list)){
+    res <- GET(url=title_list[i],
+               user_agent(agent='Googlebot/2.1 (+http://www.google.com/bot.html)'))
+    status_code(res)
+    text <- read_html(x=res, encoding = "ko_KR.UTF-8") %>% 
+      html_nodes(xpath='//*[@class="type01"]/li/dl/dt/a') %>% 
+      html_text()
+    text <- gsub("[\r\n\t]","", text)
+    text <- gsub("[[:punct:]]","", text)
+    text <- gsub("[[:cntrl:]]","",text)
+    text <-   str_split(text, pattern=" ")
+    a[[i]]<-text
+  }
+  tw[[j]] <- table(unlist(a)) %>% 
+    as.data.frame(stringsAsFactors = FALSE) %>% 
+    rename('keyword'='Var1', 'freq'='Freq')
+}
+```
+---
+class: lineheight
+# 관련 기사 크롤링
+```{r, eval=F}
+# change to loop
+# 년도별 word cloud
 
-<!--- 모델링을 위해 사용한 데이터들 설명
-어디서 받아왔는지... 뭐 이런것도 --->
+wc.year <- function(k){
+  layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
+  par(mar=rep(0, 4))
+  plot.new()
+  text(x=0.5, y=0.5, paste('wordcloud in year', k))
+  wordcloud(words = tw[[k]]$keyword,
+          freq = tw[[k]]$freq,
+          min.freq = 1,
+          max.words = 200,
+          random.order = FALSE,
+          rot.per = .1,
+          scale = c(3, 0.5),
+          colors = brewer.pal(4, "Dark2"))
+
+```
+---
+class: lineheight
+# 관련 기사 크롤링
+![2002](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2002.png)
+---
+class: lineheight
+# 관련 기사 크롤링
+![2003](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2003.png)
+---
+class: lineheight
+# 관련 기사 크롤링
+![2004](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2004.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2005](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2005.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2006](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2006.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2007](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2007.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2008](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2008.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2009](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2009.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2010](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2010.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2011](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2011.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2012](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2012.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2013](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2013.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2014](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2014.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2015](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2015.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2016](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2016.png)
+
+---
+class: lineheight
+# 관련 기사 크롤링
+![2017](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2017.png)
+
+
+---
+class: lineheight
+# 가용 변수 선정
+((((((((여기 들어가면서 우리가 크롤링도 참조하고 기사도 참조하고
+우리끼리 얘기도 해서; 선정한 변수 중에 실제로 사용가능한거 뽑았다고 설명해주면
+깔끔하게 발표할 수 있을 것 같아))))))
 
 --
+
+.pull-left[
+### .blue-1[반응변수]
+- 시도별 플라스틱 폐기물 배출량</br>(2002~2017)
+</br>.small[출처: [자원순환정보시스템](https://www.recycling-info.or.kr/)
+]]
+
+--
+
+.pull-right[
+### .blue-1[설명변수]
+- 1인가구 수
+- 인구 증가율
+- 플라스틱 산업부가가치
+- 경제성장률
+- 과대포장금지법 시행여부
+- 배달 주문 통화량
+- 원유수입단가
+- 비알콜음료업 점포 수
+- 시도별 폐기물 배출량</br>(종이류, 캔류 등)
+]
+
+
+---
+class: lineheight
+# 데이터 전처리
+### Python을 사용한 데이터 전처리
+![csv불러오기](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EB%8D%B0%EC%9D%B4%ED%84%B0%EA%B0%80%EA%B3%B5/1_read_csv.PNG)
+
+---
+class: lineheight
+### Python을 사용한 데이터 전처리
+![열 이름 설정](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EB%8D%B0%EC%9D%B4%ED%84%B0%EA%B0%80%EA%B3%B5/2.colname%EC%84%B8%ED%8C%85.PNG)
+
+---
+class: lineheight
+### Python을 사용한 데이터 전처리
+![쉼표분리](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EB%8D%B0%EC%9D%B4%ED%84%B0%EA%B0%80%EA%B3%B5/3.%EC%89%BC%ED%91%9C%EB%B6%84%EB%A6%AC.PNG)
+
+---
+class: lineheight
+### Python을 사용한 데이터 전처리
+![오류데이터처리및변환](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EB%8D%B0%EC%9D%B4%ED%84%B0%EA%B0%80%EA%B3%B5/4_%EC%98%A4%EB%A5%98%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%B2%98%EB%A6%AC%EB%B0%8Fnumeric%EB%B3%80%ED%99%98.PNG)
+</br></br></br></br>
+![null값 채우기](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EB%8D%B0%EC%9D%B4%ED%84%B0%EA%B0%80%EA%B3%B5/5_%EC%8B%9C%EA%B5%B0%EA%B5%ACnull%EA%B0%92%EC%B1%84%EC%9A%B0%EA%B8%B0.PNG)
+
+---
+class: lineheight
+### Python을 사용한 데이터 전처리
+![연도기입](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EB%8D%B0%EC%9D%B4%ED%84%B0%EA%B0%80%EA%B3%B5/6_%EC%97%B0%EB%8F%84%EA%B8%B0%EC%9E%85.PNG)
+
+---
+class: lineheight
+# 최종 데이터
+뒤쪽 분석들에 사용된 변수 list만 뽑아 달면 좋을거같아서 추가했음. 흐름상 삭제가능!</br>최종 적용된 데이터로 쓰기 (예시: 배달량 대신 "배달 주문 통화량")
 
 .pull-left[
 ### .blue-1[종속변수]
-- 시도별 플라스틱 폐기물 배출량(2002~2017)   
-출처: 
-]
-
---
+- 시도별 플라스틱 폐기물 배출량</br>(2002~2017)   
+.small[출처:[자원순환정보시스템](https://www.recycling-info.or.kr/)
+]]
 
 .pull-right[
 ### .blue-1[독립변수]
-쓴거 리스트 달아놓기   
-출처, 연도 등등 간략하게 같이!
+- 1인가구 수
+- 플라스틱 산업부가가치
+- 경제성장률
+- 과대포장금지법 시행여부
+- 배달 주문 통화량
+- 원유수입단가
+- 비알콜음료업 점포 수
+- 시도별 폐기물 배출량</br>(종이류, 캔류 등)
 ]
 
-
 ---
 class: lineheight
-
-# EDA
-
-전처리과정 이미지(보여줄 코드가 있으면 함께)로 추가.
-
----
-class: lineheight
-
 # 분석과정 1
-
-좌측에 세로로 긴 차트가 들어가거나 설명할게 길 때.
-<!--- 처리 어떻게 했는지 r코드 첨부하기
-한거 있으면 슬라이드 첨부해서 다 설명 --->
+여기서부터 모델링 쭉쭉   
+한쪽이 길어야 할 때.
 
 .left-column[
 ```{r}
@@ -155,9 +406,6 @@ class: lineheight
 # 분석과정 2
 화면을 정확히 반반으로 나누고 싶을 때.
 
-<!--- 처리 어떻게 했는지 r코드 첨부하기
-한거 있으면 슬라이드 첨부해서 다 설명 --->
-
 .pull-left[
 ```{r}
 #예시 R 코드
@@ -173,7 +421,6 @@ plot(cars)
 - 뭘 알아냈는지... 등등
 ]
 ]
-
 
 ---
 class: lineheight
@@ -205,12 +452,40 @@ class: lineheight
 class: lineheight
 # How to save sea turtles
 ### .blue-1[현실 적용 방안]
-결과의 현실적인 해석.
+결과의 현실적인 해석.  
+
+이러한 한계점이 있었지만~ 어쨌든 해본 결과 이런 게 도움이 될 거라고 본다~ 에 최근 일회용컵 규제 등 정책 동향 엮어서 발표하면 될 듯.
+
+---
+class: lineheight
+# 자료 출처
+.small[
+- 전국 폐기물 발생 및 처리현황 출처 : 자원순환정보시스템
+- 시도별 폐기물 배출량(총쓰레기, 종이류, 유리병류, 캔류) : 자원순환정보시스템
+- 1인 가구수 출처: 통계청, 「인구총조사」
+- 인구증가율 출처 : 통계청, 「인구총조사」, 「장래인구추계」
+- 경제활동인구 출처 : 통계청, 「경제활동인구조사」
+- 지역내총생산 출처 : 통계청, 「지역소득」
+- 지역별 종사자수(제조업, 숙박및음식점업, 농림어업)  출처 : 통계청, 「전국사업체조사」
+- 플라스틱 산업 부가가치 출처 : 산업통상자원부,「소재·부품산업동향조사」
+- 경제성장율 출처 : 한국은행, 「국민계정」
+- 서울시 배달업종별 이용 통화량 출처 : SKT Big Data Hub
+- 국제유가 출처 : 에너지경제연구원
+- 비알콜음료업 점포 수 : ??
+- 취수시설 출처 : 환경부, 「수자원현황」
+- 과대포장금지법 출처: [국가법령정보센터](http://www.law.go.kr/법령/제품의포장재질ㆍ포장방법에관한기준등에관한규칙)
+</br></br>
+- 이미지 출처: [Unsplash.com](unsplash.com)
+]
+
 
 ---
 class: lineheight
 # References
-참고문헌 필요시 작성
+.small[
+- http://www.sisajournal.com/news/articleView.html?idxno=184380
+- http://www.hani.co.kr/arti/PRINT/838969.html
+]
 
 ---
 class: center, middle
