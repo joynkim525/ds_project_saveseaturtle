@@ -1,9 +1,12 @@
 # ds_project_saveseaturtle
 
 ### 사용 데이터
-1. 전국 폐기물 발생 및 처리현황 https://www.recycling-info.or.kr/rrs/stat/envStatList.do?menuNo=M13020201}
-2. 서울시 배달업종별 이용 통화량 https://www.bigdatahub.co.kr/product/view.do?pid=1001997}
+1. 전국 폐기물 발생 및 처리현황 출처 : 자원순환정보시스템
+2. 서울시 배달업종별 이용 통화량 출처 : skt big data hub
 3. 고무-플라스틱 부가가치 ??
+4. 인구증가율 출처 : 통계청, 「인구총조사」, 「장래인구추계」	
+5. 경제성장율 출처 : 한국은행, 「국민계정」	
+6. 국제유가 출처 : 에너지경제연구원
 
 ### 독립변수
 
