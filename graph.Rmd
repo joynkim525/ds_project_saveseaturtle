@@ -1,0 +1,109 @@
+---
+title: "Untitled"
+author: '2015122016'
+date: "2019년 6월 19일"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(randomForest)
+```
+
+```{r data import and eda}
+dat <- read.csv("file:///C:/Users/Lucy Jooyeon Kim/Desktop/ds_yonsei/project/데이터셋v03.csv",
+                stringsAsFactors=F)
+pop <- read.csv("file:///C:/Users/Lucy Jooyeon Kim/Desktop/ds_yonsei/project/data/1인가구_시도/00~17 총인구수.csv",
+                stringsAsFactors=F)
+pop <- pop[-1,]
+pop <- pop[,-c(2:3)]
+pop[is.na(pop)] <- 0
+for(i in 2:17){
+  pop[,i] <- as.numeric(pop[,i])}
+pop <- pop[,-1]
+pop <- unlist(pop)
+dat$totalpopu <- pop
+
+colnames(dat)[8] <- "일인가구"
+dat$비알콜음료업점포수 <- as.numeric(dat$비알콜음료업점포수)
+dat$취수시설 <- as.numeric(dat$취수시설)
+dat$plt_pr <- dat$플라스틱 / dat$totalpopu
+dat <- dat[,-c(3,22)]
+
+colSums(is.na(dat))
+dat[is.na(dat)] <- 0
+```
+
+
+```{r graph by total}
+dat2 <- dat[dat$시도별 == "합계",]
+dat2 %>% group_by(year) %>% ggplot(aes(x=총쓰레기, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x=종이류, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x=유리병류, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x=캔류, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x=일인가구, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x=인구증가율, y=plt_pr)) + geom_point(alpha=0.5) + coord_cartesian(xlim = c(-5, 5))
+dat2 %>% group_by(year) %>% ggplot(aes(x=플라스틱산업부가가치, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x=비알콜음료업점포수, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x=경제성장률, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x=과대포장금지법, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x= 원유수입단가, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x= 경제활동인구, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x= 지역내총생산, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x= 제조업, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x= 숙박및음식점업, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x= 농림어업, y=plt_pr)) + geom_point(alpha=0.5)
+dat2 %>% group_by(year) %>% ggplot(aes(x= 취수시설, y=plt_pr)) + geom_point(alpha=0.5)
+```
+
+
+```{r}
+dat3 <- dat[dat$시도별 == "서울",]
+dat3 %>% group_by(year) %>% ggplot(aes(x= 배달량, y=plt_pr)) + geom_point(alpha=0.5)
+```
+
+```{r graph by region}
+data <- dat[dat$시도별 != "합계",]
+
+data %>% group_by(year) %>% ggplot(aes(x=총쓰레기, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x=종이류, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x=유리병류, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x=캔류, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x=일인가구, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x=인구증가율, y=plt_pr, color=시도별)) + geom_point(alpha=0.5) + coord_cartesian(xlim = c(-5, 5))
+data %>% group_by(year) %>% ggplot(aes(x=플라스틱산업부가가치, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x=비알콜음료업점포수, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x=경제성장률, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x=과대포장금지법, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x= 경제활동인구, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x= 지역내총생산, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x= 제조업, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x= 숙박및음식점업, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x= 농림어업, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x= 취수시설, y=plt_pr, color=시도별)) + geom_point(alpha=0.5)
+```
+
+```{r graph by year}
+data %>% group_by(시도별) %>% ggplot(aes(x=총쓰레기, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x=종이류, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x=유리병류, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x=캔류, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x=일인가구, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x=인구증가율, y=plt_pr, color=year)) + geom_point(alpha=0.5) + coord_cartesian(xlim = c(-5, 5))
+data %>% group_by(시도별) %>% ggplot(aes(x=플라스틱산업부가가치, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x=비알콜음료업점포수, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x=경제성장률, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x=과대포장금지법, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x= 경제활동인구, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x= 지역내총생산, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x= 제조업, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x= 숙박및음식점업, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(시도별) %>% ggplot(aes(x= 농림어업, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+data %>% group_by(year) %>% ggplot(aes(x= 취수시설, y=plt_pr, color=year)) + geom_point(alpha=0.5)
+```
+
+```{r}
+summary(lm(plt_pr ~. , data=data))
+```
+
