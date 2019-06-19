@@ -1,0 +1,120 @@
+---
+title: "공간시각화"
+author: "solhee"
+date: "2019년 6월 17일"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(stringr)
+library(ggplot2)
+library(sf)
+library(pryr)
+library(rvest)
+library(ggpubr)
+library(extrafont)
+loadfonts()
+library(tmap)
+```
+
+```{r}
+
+sido_shp <- st_read("C:/Users/thfgm/Desktop/데사입/CTPRVN_201902/TL_SCCO_CTPRVN.shp")
+head(sido_shp)
+```
+
+```{r}
+#1.2 shp 파일 불러오기
+colnames(sido_shp)
+sido_shp$CTP_KOR_NM = iconv(sido_shp$CTP_KOR_NM, "CP949", "UTF-8", mark = TRUE, toRaw = FALSE)
+
+head(sido_shp)
+```
+```{r}
+## 1.3. 시군 코드 --------
+sido_cd_df <- read_xlsx("C:/Users/thfgm/Desktop/데사입/jscode20190701/jscode20190701/KIKcd_H.20190701.xlsx", sheet="KIKcd_H")
+sido_cd_df <- sido_cd_df %>% 
+    mutate(CTPRVN_CD = str_sub(행정동코드, 1,2)) %>% 
+    group_by(CTPRVN_CD) %>% 
+    summarise(시도명 = first(시도명))
+
+head(sido_cd_df)
+unique(sido_cd_df$시도명)
+```
+```{r}
+
+data <- read_csv('C:/Users/thfgm/Desktop/데이터셋v04.csv')
+head(data)
+```
+```{r}
+unique(sido_cd_df$시도명)
+unique(data$시도명)
+```
+
+
+
+```{r}
+data[data$시도명 == '서울', "시도명"] = '서울특별시'
+data[data$시도명 == '부산', "시도명"] = '부산광역시'
+data[data$시도명 == "대구", "시도명"] = "대구광역시"
+data[data$시도명 == "인천", "시도명"] = "인천광역시"
+data[data$시도명 == "광주", "시도명"] = "광주광역시"
+data[data$시도명 == "대전", "시도명"] = "대전광역시"
+data[data$시도명 == "울산", "시도명"] = "울산광역시"
+data[data$시도명 == "세종", "시도명"] = "세종특별자치시"
+data[data$시도명 == "경기", "시도명"] = "경기도"
+data[data$시도명 == "강원", "시도명"] = "강원도"
+data[data$시도명 == "충북", "시도명"] = "충청북도"
+data[data$시도명 == "충남", "시도명"] = "충청남도"
+data[data$시도명 == "전북", "시도명"] = "전라북도"
+data[data$시도명 == "전남", "시도명"] = "전라남도"
+data[data$시도명 == "경북", "시도명"] = "경상북도"
+data[data$시도명 == "경남", "시도명"] = "경상남도"
+data[data$시도명 == "제주", "시도명"] = "제주특별자치도"
+head(data)
+```
+
+
+
+
+```{r}
+#2. 데이터 병합
+## 행정코드와 선거결과 병합
+jibang_df <- inner_join(sido_cd_df, data, by = "시도명")
+sido_shp <- left_join(sido_shp, jibang_df, by="CTPRVN_CD")
+```
+
+```{r}
+## 3 SHP 파일 크기 줄이기 --------
+sido_simp_shp <- st_simplify(sido_shp, dTolerance = 100)
+```
+
+
+```{r}
+tmap_mode("view")
+tm_shape(sido_simp_shp) +
+    # tm_polygons(col = "득표수") +
+    tm_borders() +
+    tm_fill("플라스틱",
+            style = "kmeans",
+            title=c("시도명", "플라스틱"),
+            popup.vars=c("시도명", "플라스틱"))
+```
+
+
+
+```{r}
+ggplot(data=sido_simp_shp, aes(fill=득표수)) +
+    geom_sf() +
+    theme_pubr(base_family="NanumGothic") +
+    labs(title="제6회 지방선거 - 광역단체장") + 
+    theme(legend.position = "right") +
+    scale_fill_gradient(low = "wheat1", high = "red", name = "득표수", labels = scales::comma)
+```
+
