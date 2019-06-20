@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 # <strong><em>Save Sea Turtles</em></strong>
 ## <em>⚔<br/>DS Yonsei SP 2019</br>Final Project</em>
 ### Team 거북이
-### (updated: 2019-06-19)
+### (updated: 2019-06-20)
 
 ---
 
@@ -46,15 +46,16 @@ Image credit: © naturepl.com / Jordi Chias / WWF
 ]]]
 
 
-.white[(((((((여기서 거북이가 플라스틱 때문에 죽어가고 있다 설명))))))]
+&lt;!--- 여기서 거북이가 플라스틱 때문에 죽어가고 있다 설명 ---&gt;
 
 ---
-class: inverse, center, middle
+class: inverse, center
 background-image: url("https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/photo-1526951521990-620dc14c214b.jpg")
 background-size: cover
-
-.white[((((((((플라스틱!! 바다오염!!! 거북이 불쌍해!!! &lt;/br&gt;
-전 세계적 문제라는 거 한번 흘려주면 다음 슬라이드로 이어지기 좋을 것 같아요))))))))]
+&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;
+# 플라스틱으로 인한 해안 오염
+&lt;!--- 플라스틱!! 바다오염!!! 거북이 불쌍해!!! &lt;/br&gt;
+전 세계적 문제라는 거 한번 흘려주면 다음 슬라이드로 이어지기 좋을 것 같아요 ---&gt;
 
 ---
 class: lineheight
@@ -82,63 +83,6 @@ class: lineheight
 
 .bold[.footnote[Image credit: © hani.co.kr / 이재훈 기자 ]]
 ]
-
----
-class: lineheight
-# 한국 플라스틱 배출 현황
-#### 시계열 그래프를 통해 변화 동향 확인
-
-```r
-# 전국 플라스틱 폐기물 배출량 시도표
-whole &lt;- filter(a, 시도별 == '합계')
-
-ggplot(data = whole, aes(x = year, y = 플라스틱))+
-  geom_line(color = "#00AFBB", size = 2)
-
-# 플라스틱 배출량과 총 폐기물 배출량 함께보기
-df &lt;- whole %&gt;%
-  select(year, 플라스틱, 총쓰레기) %&gt;%
-  gather(key = "variable", value = "value", -year)
-
-ggplot(df, aes(x = year, y = value)) + 
-  geom_line(aes(color = variable), size = 1) +
-  scale_color_manual(values = c("#00AFBB", "#E7B800")) +
-  labs(title='연도별 플라스틱 배출량 및 총 쓰레기 배출량' )
-```
----
-class: lineheight
-# 한국 플라스틱 배출 현황
-#### 시계열 그래프를 통해 변화 동향 확인
-
-```r
-# 총 쓰레기 배출량 대비 플라스틱 배출량
-ggplot(data = whole, aes(x = year, y = 플라스틱/총쓰레기))+
-  geom_line(color = "#00AFBB", size = 2)+
-  labs(title='' )+
-  labs(title='총쓰레기 대비 플라스틱' )
-
-# 시도별 플라스틱 배출량
-library(dplyr)
-bg &lt;- group_by(a, 시도별)
-bgs &lt;- select(bg, 시도별, year, 플라스틱)
-bgs1 &lt;- filter(bgs, 시도별 != '합계')
-ggplot(bgs1, aes(x = year, y = 플라스틱)) + 
-  geom_line(aes(color = 시도별), size = 1) +
-  labs(title='시도별 플라스틱 배출량' )
-```
-
----
-### 총 쓰레기 배출량 대비 플라스틱 배출량
-&lt;/br&gt;
-.center[.middle[
-![시계열일반](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EC%B4%9D%EC%93%B0%EB%A0%88%EA%B8%B0%EB%8C%80%EB%B9%84%ED%94%8C%EB%9D%BC%EC%8A%A4%ED%8B%B1.png)
-]]
----
-### 시도별 플라스틱 배출량
-&lt;/br&gt;
-.center[.middle[
-![시도별배출량](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EC%8B%9C%EB%8F%84%EB%B3%84%20%ED%94%8C%EB%9D%BC%EC%8A%A4%ED%8B%B1%20%EB%B0%B0%EC%B6%9C%EB%9F%89.png)
-]]
 
 ---
 class: lineheight
@@ -302,14 +246,70 @@ class: lineheight
 class: lineheight
 # 관련 기사 크롤링
 ![2017](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/2017.png)
+---
+class: lineheight
+# 한국 플라스틱 배출 현황
+#### 시계열 그래프를 통해 변화 동향 확인
+
+```r
+# 전국 플라스틱 폐기물 배출량 시도표
+whole &lt;- filter(a, 시도별 == '합계')
+
+ggplot(data = whole, aes(x = year, y = 플라스틱))+
+  geom_line(color = "#00AFBB", size = 2)
+
+# 플라스틱 배출량과 총 폐기물 배출량 함께보기
+df &lt;- whole %&gt;%
+  select(year, 플라스틱, 총쓰레기) %&gt;%
+  gather(key = "variable", value = "value", -year)
+
+ggplot(df, aes(x = year, y = value)) + 
+  geom_line(aes(color = variable), size = 1) +
+  scale_color_manual(values = c("#00AFBB", "#E7B800")) +
+  labs(title='연도별 플라스틱 배출량 및 총 쓰레기 배출량' )
+```
+---
+class: lineheight
+# 한국 플라스틱 배출 현황
+#### 시계열 그래프를 통해 변화 동향 확인
+
+```r
+# 총 쓰레기 배출량 대비 플라스틱 배출량
+ggplot(data = whole, aes(x = year, y = 플라스틱/총쓰레기))+
+  geom_line(color = "#00AFBB", size = 2)+
+  labs(title='' )+
+  labs(title='총쓰레기 대비 플라스틱' )
+
+# 시도별 플라스틱 배출량
+library(dplyr)
+bg &lt;- group_by(a, 시도별)
+bgs &lt;- select(bg, 시도별, year, 플라스틱)
+bgs1 &lt;- filter(bgs, 시도별 != '합계')
+ggplot(bgs1, aes(x = year, y = 플라스틱)) + 
+  geom_line(aes(color = 시도별), size = 1) +
+  labs(title='시도별 플라스틱 배출량' )
+```
+
+---
+### 총 쓰레기 배출량 대비 플라스틱 배출량
+&lt;/br&gt;
+.center[.middle[
+![시계열일반](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EC%B4%9D%EC%93%B0%EB%A0%88%EA%B8%B0%EB%8C%80%EB%B9%84%ED%94%8C%EB%9D%BC%EC%8A%A4%ED%8B%B1.png)
+]]
+---
+### 시도별 플라스틱 배출량
+&lt;/br&gt;
+.center[.middle[
+![시도별배출량](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/%EC%8B%9C%EB%8F%84%EB%B3%84%20%ED%94%8C%EB%9D%BC%EC%8A%A4%ED%8B%B1%20%EB%B0%B0%EC%B6%9C%EB%9F%89.png)
+]]
 
 
 ---
 class: lineheight
 # 가용 변수 선정
-((((((((여기 들어가면서 우리가 크롤링도 참조하고 기사도 참조하고
+&lt;!--- 여기 들어가면서 우리가 크롤링도 참조하고 기사도 참조하고
 우리끼리 얘기도 해서; 선정한 변수 중에 실제로 사용가능한거 뽑았다고 설명해주면
-깔끔하게 발표할 수 있을 것 같아))))))
+깔끔하게 발표할 수 있을 것 같아 ---&gt;
 
 --
 
@@ -323,6 +323,7 @@ class: lineheight
 
 .pull-right[
 ### .blue-1[설명변수]
+.footnotesize[
 - 1인가구 수
 - 인구 증가율
 - 플라스틱 산업부가가치
@@ -332,7 +333,15 @@ class: lineheight
 - 원유수입단가
 - 비알콜음료업 점포 수
 - 시도별 폐기물 배출량&lt;/br&gt;(종이류, 캔류 등)
-]
+- 경제활동인구수
+- 지역내총생산
+- 제조업
+- 숙박 및 음식점업
+- 농림어업
+- 취수시설
+- 총인구   
+.center[등등...]
+]]
 
 
 ---
@@ -366,7 +375,6 @@ class: lineheight
 ---
 class: lineheight
 # 최종 데이터
-뒤쪽 분석들에 사용된 변수 list만 뽑아 달면 좋을거같아서 추가했음. 흐름상 삭제가능!&lt;/br&gt;최종 적용된 데이터로 쓰기 (예시: 배달량 대신 "배달 주문 통화량")
 
 .pull-left[
 ### .blue-1[종속변수]
@@ -376,83 +384,24 @@ class: lineheight
 
 .pull-right[
 ### .blue-1[독립변수]
-- 1인가구 수
-- 플라스틱 산업부가가치
-- 경제성장률
-- 과대포장금지법 시행여부
-- 배달 주문 통화량
-- 원유수입단가
-- 비알콜음료업 점포 수
-- 시도별 폐기물 배출량&lt;/br&gt;(종이류, 캔류 등)
++ 인구증가율
++ 일인가구 
++ 비알콜음료업점포수 
++ 취수시설 
++ 숙박및음식점업 
++ 플라스틱산업부가가치 
++ 농림어업 
++ 시도별 폐기물 배출량&lt;/br&gt;(종이류, 캔류, 유리병류)
 ]
 
 ---
-class: lineheight
-# 분석과정 1
-여기서부터 모델링 쭉쭉   
-한쪽이 길어야 할 때.
-
-.left-column[
-
-```r
-#예시 R 코드
-plot(cars)
-```
-
-![](xiaringanPractice_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
-]
-
-.right-column[
-.content-box-yellow[ #### 코드 제목 예시
-분석 설명 예시
-- 왜 했는지
-- 어떻게 했는지
-- 뭘 알아냈는지... 등등
-]
-]
-
+class: lineheight, middle, center
+# 변수 산점도
+![경제성장률](https://raw.githubusercontent.com/joynkim525/ds_project_saveseaturtle/master/plot_region/%ED%94%8C%EB%9D%BC%EC%8A%A4%ED%8B%B1_%EA%B2%BD%EC%A0%9C%EC%84%B1%EC%9E%A5%EB%A5%A0.png)
 ---
-class: lineheight
-
-# 분석과정 2
-화면을 정확히 반반으로 나누고 싶을 때.
-
-.pull-left[
-
-```r
-#예시 R 코드
-plot(cars) 
-```
-
-![](xiaringanPractice_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
-]
-
-.pull-right[
-.content-box-yellow[ #### 코드 제목 예시
-분석 설명 예시
-- 왜 했는지
-- 어떻게 했는지
-- 뭘 알아냈는지... 등등
-]
-]
-
----
-class: lineheight
-# 분석과정 3
-
-가로로 긴 차트가 들어갈 때. 크기는 chunk 에서 옵션을 사용해서 변경하던가 할 것.
-
-```r
-#예시 R 코드, 특정 라인 강조 추가
-x &lt;- 1
-*plot(cars)
-```
-
-![](xiaringanPractice_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
-
-.content-box-grey[
-.red[코드 설명]
-]
+class: lineheight, middle, center
+# 변수 산점도
+![]
 
 ---
 class: lineheight
@@ -468,10 +417,18 @@ class: lineheight
 ---
 class: lineheight
 # How to save sea turtles
-### .blue-1[현실 적용 방안]
-결과의 현실적인 해석.  
 
-이러한 한계점이 있었지만~ 어쨌든 해본 결과 이런 게 도움이 될 거라고 본다~ 에 최근 일회용컵 규제 등 정책 동향 엮어서 발표하면 될 듯.
+.pull-left[
+### Plastic Zero
+- 미국: 플라스틱 빨대 사용 금지&lt;/br&gt;(시애틀, 캘리포니아 등)
+- EU: 2021년까지 플라스틱 빨대 등 일회용품 퇴출 목표
+- 한국: 카페 매장 내 일회용&lt;/br&gt;플라스틱 컵 사용 금지
+]
+
+.pull-right[
+### .blue-1[현실 적용 방안]
+
+]
 
 ---
 class: lineheight
@@ -484,15 +441,15 @@ class: lineheight
 - 경제활동인구 출처 : 통계청, 「경제활동인구조사」
 - 지역내총생산 출처 : 통계청, 「지역소득」
 - 지역별 종사자수(제조업, 숙박및음식점업, 농림어업)  출처 : 통계청, 「전국사업체조사」
+- 비알콜음료업 점포 수 : 통계청, 「전국사업체조사」
 - 플라스틱 산업 부가가치 출처 : 산업통상자원부,「소재·부품산업동향조사」
-- 경제성장율 출처 : 한국은행, 「국민계정」
-- 서울시 배달업종별 이용 통화량 출처 : SKT Big Data Hub
-- 국제유가 출처 : 에너지경제연구원
-- 비알콜음료업 점포 수 : ??
 - 취수시설 출처 : 환경부, 「수자원현황」
+- 경제성장율 출처 : 한국은행, 「국민계정」
+- 국제유가 출처 : 에너지경제연구원
+- 서울시 배달업종별 이용 통화량 출처 : SKT Big Data Hub
 - 과대포장금지법 출처: [국가법령정보센터](http://www.law.go.kr/법령/제품의포장재질ㆍ포장방법에관한기준등에관한규칙)
 &lt;/br&gt;&lt;/br&gt;
-- 이미지 출처: [Unsplash.com](unsplash.com)
+- 이미지 출처: 본문 내, [Unsplash.com](unsplash.com)
 ]
 
 
@@ -500,8 +457,10 @@ class: lineheight
 class: lineheight
 # References
 .small[
-- http://www.sisajournal.com/news/articleView.html?idxno=184380
-- http://www.hani.co.kr/arti/PRINT/838969.html
+- 박성의. (2019년 4월 3일). 2050년까지 나올 플라스틱 쓰레기 예측량 12,000,000,000톤. _시사저널._ 검색일 6월 13일, 2019년, http://www.sisajournal.com/news/articleView.html?idxno=184380
+- 이재호. (2019년 4월 3일). 포장용 플라스틱 사용량, 한국이 세계 2위인 거 아셨나요. _한겨레._ 검색일 6월 19일, 2019년. http://www.hani.co.kr/arti/PRINT/838969.html
+- 안재용, 강기준. (2018년 9월 9일). [MT리포트]국내외서 쏟아지는 '플라스틱 제로' 법안들. _머니투데이._ 검색일 6월 19일, 2019년, http://news.mt.co.kr/mtview.php?no=2018090915327658596
+
 ]
 
 ---
@@ -516,7 +475,7 @@ background-image: url("https://raw.githubusercontent.com/joynkim525/ds_project_s
 background-size: cover
 
 # Thank you!
-&lt;br&gt;
+&lt;/br&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
