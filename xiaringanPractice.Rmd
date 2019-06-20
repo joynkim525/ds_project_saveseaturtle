@@ -454,17 +454,6 @@ class: lineheight, middle
 
 ---
 class: lineheight
-# 결론
-
-.Large[분석한 결과 종합해서 정리하는 파트.]
-
-.large[
-+ 앞서 한 것들 결과 요약
-+ 요약
-]
-
----
-class: lineheight
 # How to save sea turtles
 
 .pull-left[
@@ -509,7 +498,8 @@ class: lineheight
 - 박성의. (2019년 4월 3일). 2050년까지 나올 플라스틱 쓰레기 예측량 12,000,000,000톤. _시사저널._ 검색일 6월 13일, 2019년, http://www.sisajournal.com/news/articleView.html?idxno=184380
 - 이재호. (2019년 4월 3일). 포장용 플라스틱 사용량, 한국이 세계 2위인 거 아셨나요. _한겨레._ 검색일 6월 19일, 2019년. http://www.hani.co.kr/arti/PRINT/838969.html
 - 안재용, 강기준. (2018년 9월 9일). [MT리포트]국내외서 쏟아지는 '플라스틱 제로' 법안들. _머니투데이._ 검색일 6월 19일, 2019년, http://news.mt.co.kr/mtview.php?no=2018090915327658596
-
+- 연합뉴스. (2019년 3월 27일). [쓰레기와의 전쟁] ③ "정확한 배출량 파악 후 발생량 줄여야". _연합뉴스._ 검색일 6월 10일, 2019년, https://www.mk.co.kr/news/society/view/2019/03/183705/
+- 김성배. (2012). 플라스틱으로 인한 해양오염에 대한 대책 -국제법적,미국법적 대처와 그 시사점-. 환경법연구, 34(2), 21-55.
 ]
 
 ---
